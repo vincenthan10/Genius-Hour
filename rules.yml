@@ -12,7 +12,9 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-- rule: music theory question
-  steps:
-  - intent: ask_music_theory
-  - action: action_music_theory_answer
+# - rule: music theory question
+#   steps:
+#   - intent: ask_scale
+#   - intent: ask_chord
+#   - intent: ask_interval
+#   - action: action_music_theory_answer
