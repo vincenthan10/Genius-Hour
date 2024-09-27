@@ -29,7 +29,17 @@ stories:
   - intent: deny
   - action: utter_goodbye
 
-- story: respond to music theory questions
+- story: explain scale
   steps:
-  - intent: ask_music_theory
+  - intent: ask_scale
+  - action: action_music_theory_answer
+
+- story: explain interval
+  steps:
+  - intent: ask_interval
+  - action: action_music_theory_answer
+
+- story: explain chord
+  steps:
+  - intent: ask_chord
   - action: action_music_theory_answer
