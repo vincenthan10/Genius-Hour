@@ -32,14 +32,14 @@ stories:
 - story: explain scale
   steps:
   - intent: ask_scale
-  - action: action_music_theory_answer
+  - action: action_scale_answer
 
 - story: explain interval
   steps:
   - intent: ask_interval
-  - action: action_music_theory_answer
+  - action: action_scale_answer
 
 - story: explain chord
   steps:
   - intent: ask_chord
-  - action: action_music_theory_answer
+  - action: action_scale_answer
