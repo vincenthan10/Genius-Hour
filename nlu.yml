@@ -96,17 +96,19 @@ nlu:
     - Can you explain a [minor](scale_type) scale?
     - What is a [pentatonic](scale_type) scale?
     - What is a [whole-tone](scale_type) scale?
+    - Tell me about the [chromatic](scale_type) scale.
+    - What is a scale?
 
-- intent: ask_interval
-  examples: |
-    - What is a [perfect fifth](interval)?
-    - Can you explain the [minor third](interval)?
-    - How do y ou find a [major sixth](interval)?
-    - What is a [diminished fifth](interval)?
+# - intent: ask_interval
+#   examples: |
+#     - What is a [perfect fifth](interval)?
+#     - Can you explain the [minor third](interval)?
+#     - How do y ou find a [major sixth](interval)?
+#     - What is a [diminished fifth](interval)?
 
-- intent: ask_chord
-  examples: |
-    - How do you build a [major](chord_type) chord?
-    - What notes are in a [diminished](chord_type) chord?
-    - Can you help me construct a [minor](chord_type) chord?
-    - What is an [augmented](chord_type) chord?
+# - intent: ask_chord
+#   examples: |
+#     - How do you build a [major](chord_type) chord?
+#     - What notes are in a [diminished](chord_type) chord?
+#     - Can you help me construct a [minor](chord_type) chord?
+#     - What is an [augmented](chord_type) chord?
