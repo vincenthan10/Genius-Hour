@@ -18,3 +18,8 @@ rules:
 #   - intent: ask_chord
 #   - intent: ask_interval
 #   - action: action_music_theory_answer
+
+- rule: Answer scale questions
+  steps:
+    - intent: ask_scale
+    - action: action_scale_answer
