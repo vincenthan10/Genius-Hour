@@ -18,7 +18,7 @@ entities:
   - chord_type
   
 actions:
-  - action_music_theory_answer
+  - action_scale_answer
 
 responses:
   utter_greet:
