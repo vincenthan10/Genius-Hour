@@ -37,9 +37,9 @@ stories:
 - story: explain interval
   steps:
   - intent: ask_interval
-  - action: action_scale_answer
+  - action: action_interval_answer
 
 - story: explain chord
   steps:
   - intent: ask_chord
-  - action: action_scale_answer
+  - action: action_chord_answer
