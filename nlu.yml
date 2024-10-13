@@ -92,23 +92,27 @@ nlu:
 
 - intent: ask_scale
   examples: |
-    - What is a [major](scale_type) scale?
-    - Can you explain a [minor](scale_type) scale?
+    - What is a [major scale](scale_type)?
+    - Can you explain a [minor scale](scale_type)?
     - What is a [pentatonic](scale_type) scale?
     - What is a [whole-tone](scale_type) scale?
     - Tell me about the [chromatic](scale_type) scale.
-    - What is a scale?
 
-# - intent: ask_interval
-#   examples: |
-#     - What is a [perfect fifth](interval)?
-#     - Can you explain the [minor third](interval)?
-#     - How do y ou find a [major sixth](interval)?
-#     - What is a [diminished fifth](interval)?
+- intent: ask_interval
+  examples: |
+    - What is a [perfect](quality) [fifth](distance)?
+    - Can you explain the [minor](quality) [third](distance)?
+    - How do you find a [major](quality) [sixth](distance)?
+    - What is a [diminished](quality) [fifth](distance)?
+    - What is an interval?
+    - What is a [sixth](distance)?
+    - What is a [major](quality) interval?
 
-# - intent: ask_chord
-#   examples: |
-#     - How do you build a [major](chord_type) chord?
-#     - What notes are in a [diminished](chord_type) chord?
-#     - Can you help me construct a [minor](chord_type) chord?
-#     - What is an [augmented](chord_type) chord?
+- intent: ask_chord
+  examples: |
+    - How do you build a [major chord](chord_type)?
+    - What notes are in a [diminished chord](chord_type)?
+    - Can you help me construct a [minor chord](chord_type)?
+    - What is an [augmented chord](chord_type)?
+    - What is a [major seventh chord](chord_type)?
+    - What is a [diminished seventh chord](chord_type)?
