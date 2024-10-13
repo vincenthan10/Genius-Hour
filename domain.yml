@@ -14,11 +14,21 @@ intents:
 
 entities:
   - scale_type
-  - interval
+  - quality
+  - distance
   - chord_type
+
+slots:
+  scale_type:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: scale_type
   
 actions:
   - action_scale_answer
+  - action_interval_answer
+  - action_chord_answer
 
 responses:
   utter_greet:
