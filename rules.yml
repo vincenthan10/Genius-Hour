@@ -23,3 +23,13 @@ rules:
   steps:
     - intent: ask_scale
     - action: action_scale_answer
+
+- rule: Answer interval questions
+  steps:
+    - intent: ask_interval
+    - action: action_interval_answer
+
+- rule: Answer chord questions
+  steps:
+    - intent: ask_chord
+    - action: action_chord_answer
