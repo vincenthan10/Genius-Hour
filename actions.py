@@ -22,6 +22,7 @@ class ActionScaleAnswer(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
+        scale = next(tracker.get_latest_entity_values("scale_type"), None)
 
         scale_info = {
             "major scale": "A major scale is a diatonic scale that ascends by whole-steps (W) and half-steps (H) in this specific pattern: W-W-H-W-W-W-H.",
@@ -91,15 +92,15 @@ class ActionChordAnswer(Action):
         chord = next(tracker.get_latest_entity_values("chord_type"), None)
 
         chord_info = {
-            "major chord" or "major triad": "A major triad consists of the root, major third, and perfect fifth. For example, a C major triad consists of C, E, and G.",
-            "minor chord" or "minor triad": "A minor triad consists of the root, minor third, and perfect fifth. For example, a C minor triad consists of C, E flat, and G.",
-            "diminished chord" or "diminished triad": "A diminished triad consists of the root, minor third, and diminished fifth. For example, a C diminished triad consists of C, E flat, and G flat.",
-            "augmented chord" or "augmented triad": "An augmentedd triad consists of the root, major third, and augmented fifth. For example, a C augmented triad consists of C, E, and G sharp.",
-            "major seventh": "A major seventh chord consists of the root, major third, perfect fifth, and major seventh. For example, a C major seventh chord consists of C, E, G, and B.",
-            "minor seventh": "A minor seventh chord consists of the root, minor third, perfect fifth, and minor seventh. For example, a C minor seventh chord consists of C, E flat, G, and B flat.",
-            "dominant seventh": "A dominant seventh chord consists of the root, major third, perfect fifth, and minor seventh. For example, a C dominant seventh chord consists of C, E, G, and B flat.",
-            "half-diminished seventh" or "half diminished seventh": "A half-diminished seventh chord consists of the root, minor third, diminished fifth, and minor seventh. For example, a C half-diminished seventh chord consists of C, E flat, G flat, and B flat.",
-            "diminished seventh" or "fully-diminished seventh": "A diminished seventh chord consists of the root, minor third, diminished fifth, and diminished seventh. For example, a C diminished seventh chord consists of C, E flat, G flat, and B double flat."
+            "major chord": "A major triad consists of the root, major third, and perfect fifth. For example, a C major triad consists of C, E, and G.",
+            "minor chord": "A minor triad consists of the root, minor third, and perfect fifth. For example, a C minor triad consists of C, E flat, and G.",
+            "diminished chord": "A diminished triad consists of the root, minor third, and diminished fifth. For example, a C diminished triad consists of C, E flat, and G flat.",
+            "augmented chord": "An augmented triad consists of the root, major third, and augmented fifth. For example, a C augmented triad consists of C, E, and G sharp.",
+            "major seventh chord": "A major seventh chord consists of the root, major third, perfect fifth, and major seventh. For example, a C major seventh chord consists of C, E, G, and B.",
+            "minor seventh chord": "A minor seventh chord consists of the root, minor third, perfect fifth, and minor seventh. For example, a C minor seventh chord consists of C, E flat, G, and B flat.",
+            "dominant seventh chord": "A dominant seventh chord consists of the root, major third, perfect fifth, and minor seventh. For example, a C dominant seventh chord consists of C, E, G, and B flat.",
+            "half-diminished seventh chord": "A half-diminished seventh chord consists of the root, minor third, diminished fifth, and minor seventh. For example, a C half-diminished seventh chord consists of C, E flat, G flat, and B flat.",
+            "diminished seventh chord": "A diminished seventh chord consists of the root, minor third, diminished fifth, and diminished seventh. For example, a C diminished seventh chord consists of C, E flat, G flat, and B double flat."
         }
 
         if chord and chord.lower() in chord_info:
@@ -112,4 +113,4 @@ class ActionChordAnswer(Action):
             msg = "I don't recognize that chord as I am still under development. Please provide a simpler chord type (ie one of the basic triads or seventh chords)."
         
         dispatcher.utter_message(text=str(msg))
-        return []
+        return [] 
