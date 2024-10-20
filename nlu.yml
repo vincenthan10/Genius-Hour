@@ -93,10 +93,28 @@ nlu:
 - intent: ask_scale
   examples: |
     - What is a [major scale](scale_type)?
+    - What is a [maj scale](scale_type:major scale)?
+    - Explain the [major scale](scale_type)
+    - What is the [major scale](scale_type)
+    - Tell me about a [major scale](scale_type)
     - Can you explain a [minor scale](scale_type)?
+    - Tell me about the [min scale](scale_type:minor scale).
     - What is a [pentatonic](scale_type) scale?
     - What is a [whole-tone](scale_type) scale?
     - Tell me about the [chromatic](scale_type) scale.
+    - Can you describe a [five-note](scale_type:pentatonic) scale?
+
+- synonym: pentatonic
+  examples: |
+    - five-note
+
+- synonym: major scale
+  examples: |
+    - maj scale
+
+- synonym: minor scale
+  examples: |
+    - min scale
 
 - intent: ask_interval
   examples: |
@@ -108,6 +126,26 @@ nlu:
     - What is a [sixth](distance)?
     - What is a [major](quality) interval?
 
+- synonym: perfect
+  examples: |
+    - per
+
+- synonym: major
+  examples: |
+    - maj
+
+- synonym: minor
+  examples: |
+    - min
+
+- synonym: augmented
+  examples: |
+    - aug
+
+- synonym: diminished
+  examples: |
+    - dim
+
 - intent: ask_chord
   examples: |
     - How do you build a [major chord](chord_type)?
@@ -116,3 +154,71 @@ nlu:
     - What is an [augmented chord](chord_type)?
     - What is a [major seventh chord](chord_type)?
     - What is a [diminished seventh chord](chord_type)?
+    - What is a [half-diminished seventh chord](chord_type)?
+
+- synonym: major chord
+  examples: |
+    - maj chord
+    - major triad
+    - maj triad
+
+- synonym: minor chord
+  examples: |
+    - min chord
+    - minor triad
+    - min triad
+
+- synonym: augmented chord
+  examples: |
+    - aug chord
+    - augmented triad
+    - aug triad
+
+- synonym: diminished chord
+  examples: |
+    - dim chord
+    - diminished triad
+    - dim triad
+
+- synonym: major seventh chord
+  examples: |
+    - maj 7th chord
+    - maj 7 chord
+    - major 7th chord
+    - major 7 chord
+
+- synonym: minor seventh chord
+  examples: |
+    - min 7th chord
+    - min 7 chord
+    - minor 7th chord
+    - minor 7 chord
+
+- synonym: dominant seventh chord
+  examples: |
+    - dom 7th chord
+    - dom 7 chord
+    - dominant 7th chord
+    - dominant 7 chord
+
+- synonym: half-diminished seventh chord
+  examples: |
+    - half diminished seventh chord
+    - half diminished 7th chord
+    - half diminished 7 chord
+    - half-diminished 7th chord
+    - half-diminished 7 chord
+    - half dim 7th chord
+    - half dim 7 chord
+    - half-dim 7th chord
+    - half-dim 7 chord
+
+- synonym: diminished seventh chord
+  examples: |
+    - fully diminished seventh chord
+    - fully diminished 7th chord
+    - fully diminished 7 chord
+    - diminished 7th chord
+    - diminished 7 chord
+    - dim 7th chord
+    - dim 7 chord
