@@ -89,7 +89,7 @@ nlu:
     - are you a human?
     - am I talking to a bot?
     - am I talking to a human?
-
+#####################################################
 - intent: ask_scale
   examples: |
     - What is a [major scale](scale_type)?
@@ -100,13 +100,27 @@ nlu:
     - Can you explain a [minor scale](scale_type)?
     - Tell me about the [min scale](scale_type:minor scale).
     - What is a [pentatonic](scale_type) scale?
-    - What is a [whole-tone](scale_type) scale?
-    - Tell me about the [chromatic](scale_type) scale.
-    - Can you describe a [five-note](scale_type:pentatonic) scale?
+    - What is a [whole-tone scale](scale_type)?
+    - Tell me about the [chromatic scale](scale_type).
+    - Can you describe a [five-note](scale_type:pentatonic scale) scale?
+    - What are the notes of a [C](root_note) [major scale](scale_type)?
+    - Tell me the notes of an [A](root_note) [minor scale](scale_type).
+    - Can you tell me the notes of the [B](root_note) [chromatic scale](scale_type)?
+    - What notes make up an [E flat](root_note) [whole-tone scale](scale_type)?
 
-- synonym: pentatonic
+- synonym: pentatonic scale
   examples: |
-    - five-note
+    - five-note scale
+    - five note scale
+
+- synonym: whole-tone scale
+  examples: |
+    - whole tone scale
+    
+- synonym: chromatic scale
+  examples: |
+    - twelve-note scale
+    - twelve note scale
 
 - synonym: major scale
   examples: |
@@ -115,17 +129,34 @@ nlu:
 - synonym: minor scale
   examples: |
     - min scale
-
+############################################
 - intent: ask_interval
   examples: |
     - What is a [perfect](quality) [fifth](distance)?
     - Can you explain the [minor](quality) [third](distance)?
     - How do you find a [major](quality) [sixth](distance)?
-    - What is a [diminished](quality) [fifth](distance)?
+    - What is a [diminished](quality) [fifth](distance) interval?
     - What is an interval?
     - What is a [sixth](distance)?
     - What is a [major](quality) interval?
+    - What is a [major](quality) [seventh](distance) interval?
+    - What is a [minor](quality) [seventh](distance) interval?
 
+- lookup: distance
+  examples: |
+    - unison
+    - first
+    - oneth
+    - second
+    - third
+    - fourth
+    - forth
+    - fifth
+    - sixth
+    - seventh
+    - octave
+    - eighth
+  
 - synonym: perfect
   examples: |
     - per
@@ -145,16 +176,29 @@ nlu:
 - synonym: diminished
   examples: |
     - dim
-
+##################################
 - intent: ask_chord
   examples: |
     - How do you build a [major chord](chord_type)?
+    - What is a [major chord](chord_type)?
     - What notes are in a [diminished chord](chord_type)?
     - Can you help me construct a [minor chord](chord_type)?
     - What is an [augmented chord](chord_type)?
     - What is a [major seventh chord](chord_type)?
     - What is a [diminished seventh chord](chord_type)?
     - What is a [half-diminished seventh chord](chord_type)?
+    - What are the notes of a [C](root_note) [major chord](chord_type)?
+    - What notes are in a [C](root_note) [major chord](chord_type)?
+    - Tell me the notes of a [D](root_note) [minor chord](chord_type).
+    - What notes make up a [G](root_note) [diminished chord](chord_type)?
+    - What are the notes of a [D flat](root_note) [major chord](chord_type)?
+    - What is an [A flat](root_note) [minor chord](chord_type)?
+    - What are the notes of an [F sharp](root_note) [augmented chord](chord_type)?
+    - What notes make up a [C sharp](root_note) [diminished chord](chord_type)?
+
+regex:
+- name: chord_type:info
+  pattern: ".*chord.*"
 
 - synonym: major chord
   examples: |
@@ -222,3 +266,83 @@ nlu:
     - diminished 7 chord
     - dim 7th chord
     - dim 7 chord
+    
+- lookup: root_note
+  examples: |
+    - C
+    - C flat
+    - D flat
+    - C sharp
+    - D
+    - D sharp
+    - E flat
+    - E
+    - E sharp
+    - F
+    - F flat
+    - F sharp
+    - G flat
+    - G
+    - G sharp
+    - A flat
+    - A
+    - A sharp
+    - B flat
+    - B
+    - B sharp
+
+- synonym: C flat
+  examples: |
+    - Cb
+
+- synonym: C sharp
+  examples: |
+    - C#
+
+- synonym: D flat
+  examples: |
+    - Db
+
+- synonym: D sharp
+  examples: |
+    - D#
+
+- synonym: E flat
+  examples: |
+    - Eb
+
+- synonym: E sharp
+  examples: |
+    - E#
+
+- synonym: F flat
+  examples: |
+    - Fb
+
+- synonym: F sharp
+  examples: |
+    - F#
+
+- synonym: G flat
+  examples: |
+    - Gb
+
+- synonym: G sharp
+  examples: |
+    - G#
+
+- synonym: A flat
+  examples: |
+    - Ab
+
+- synonym: A sharp
+  examples: |
+    - A#
+
+- synonym: B flat
+  examples: |
+    - Bb
+
+- synonym: B sharp
+  examples: |
+    - B#
