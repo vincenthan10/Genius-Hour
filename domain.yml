@@ -17,14 +17,9 @@ entities:
   - quality
   - distance
   - chord_type
+  - root_note
 
-slots:
-  scale_type:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: scale_type
-  
+
 actions:
   - action_scale_answer
   - action_interval_answer
