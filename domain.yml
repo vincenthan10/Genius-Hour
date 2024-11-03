@@ -1,50 +1,55 @@
-version: "3.1"
-
+version: '3.1'
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - ask_scale
-  - ask_interval
-  - ask_chord
-
+# - affirm
+- ask_chord
+- ask_interval
+- ask_scale
+# - bot_challenge
+# - deny
+# - goodbye
+# - greet
+# - mood_great
+# - mood_unhappy
+- select_answer
+- start_quiz
+slots:
+  question_number:
+    type: rasa.shared.core.slots.FloatSlot
+    initial_value: 0
+    mappings:
+    - type: from_text
+  user_answer:
+    type: rasa.shared.core.slots.TextSlot
+    mappings:
+    - type: from_text
 entities:
-  - scale_type
-  - quality
-  - distance
-  - chord_type
-  - root_note
-
-
+- quiz
+- scale_type
+- quality
+- distance
+- chord_type
+- root_note
 actions:
-  - action_scale_answer
-  - action_interval_answer
-  - action_chord_answer
-
+- action_ask_question
+- action_start_quiz
+- action_validate_answer
+- action_scale_answer
+- action_interval_answer
+- action_chord_answer
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
+  - text: Hey! How are you?
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
   utter_did_that_help:
-  - text: "Did that help you?"
-
+  - text: Did that help you?
   utter_happy:
-  - text: "Great, carry on!"
-
+  - text: Great, carry on!
   utter_goodbye:
-  - text: "Bye"
-
+  - text: Bye
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
+  - text: I am a bot, powered by Rasa.
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
