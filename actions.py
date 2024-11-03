@@ -11,6 +11,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet, FollowupAction
 
 
 class ActionScaleAnswer(Action):
@@ -246,3 +247,68 @@ class ActionChordAnswer(Action):
         
         dispatcher.utter_message(text=str(msg))
         return []
+
+
+class ActionStartQuiz(Action):
+    def name(self) -> Text:
+        return "action_start_quiz"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        quiz = next(tracker.get_latest_entity_values("quiz"), None)
+        if quiz:
+            return [SlotSet("question_number", 0), FollowupAction("action_ask_question")]
+        dispatcher.utter_message(text="Hi")
+        return[]
+    
+class ActionAskQuestion(Action):
+    def name(self) -> Text:
+        return "action_ask_question"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        question_number = tracker.get_slot("question_number")
+
+        questions = [
+            {"question": "What notes make up a C major chord?", "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"], "answer": "A"},
+            {"question": "What is the interval between C and G?", "choices": ["A) Major fifth", "B) Perfect fifth", "C) Major sixth", "D) Major fourth"], "answer": "B"},
+            {"question": "What is the pattern of whole and half steps in a major scale?", "choices": ["A) W-W-W-H-H-W-H", "B) W-W-H-W-W-H-W", "C) W-H-W-W-W-H-W", "D) W-W-H-W-W-W-H"], "answer": "D"}
+        ]
+
+        if question_number >= len(questions):
+            dispatcher.utter_message(text="That's the end of the quiz! Well done!")
+            return [SlotSet("question_number", 0)]
+        
+        current_question = questions[question_number]
+        question_text = current_question["question"]
+        choices_text = "\n".join(current_question["choices"])
+
+        dispatcher.utter_message(text=f"{question_text}\n{choices_text}")
+
+        return []
+    
+class ActionValidateAnswer(Action):
+    def name(self) -> Text:
+        return "action_validate_answer"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        user_answer = tracker.get_slot("user_answer")
+        question_number = tracker.get_slot("question_number")
+
+        questions = [
+            {"question": "What notes make up a C major chord?", "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"], "answer": "A"},
+            {"question": "What is the interval between C and G?", "choices": ["A) Major fifth", "B) Perfect fifth", "C) Major sixth", "D) Major fourth"], "answer": "B"},
+            {"question": "What is the pattern of whole and half steps in a major scale?", "choices": ["A) W-W-W-H-H-W-H", "B) W-W-H-W-W-H-W", "C) W-H-W-W-W-H-W", "D) W-W-H-W-W-W-H"], "answer": "D"}
+        ]
+
+        if user_answer == questions[question_number]["answer"]:
+            dispatcher.utter_message(text="Correct!")
+        else:
+            dispatcher.utter_message(text=f"Incorrect. The correct answer was {questions[question_number]['answer']}.")
+
+        return [SlotSet("question_number", question_number+1), FollowupAction("action_ask_question")]
