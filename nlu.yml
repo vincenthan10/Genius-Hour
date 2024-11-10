@@ -90,6 +90,32 @@ nlu:
 #     - am I talking to a bot?
 #     - am I talking to a human?
 #####################################################
+# maybe remove entities and try again
+- intent: start_quiz
+  examples: |
+    - Start the [quiz](quiz) 
+    - I'd like to take a [quiz](quiz)
+    - Give me a music theory [quiz](quiz)
+    - [Quiz](quiz) me on music theory
+    - [Test](quiz) me on music theory
+    - Give me a music theory [test](quiz)
+    - Start the [test](quiz)
+    - [Quiz](quiz) me
+    - Let's begin the [quiz](quiz)
+    - [Test](test) me
+    - Let's begin the [test](test)
+    - Can you [quiz](quiz) me on music theory?
+    - Can you [test](test) me on music theory?
+
+- intent: select_answer
+  examples: |
+    - A
+    - B
+    - C
+    - D
+    - I choose A
+    - My answer is B
+
 - intent: ask_scale
   examples: |
     - What is a [major scale](scale_type)?
@@ -347,22 +373,4 @@ regex:
   examples: |
     - B#
 
-###################################
-- intent: start_quiz
-  examples: |
-    - Start the [quiz](quiz) 
-    - I'd like to take a [quiz](quiz)
-    - Give me a music theory [quiz](quiz)
-    - [Quiz](quiz) me on music theory
-    - [Test](quiz) me on music theory
-    - Give me a music theory [test](quiz)
-    - Start the [test](quiz)
-
-- intent: select_answer
-  examples: |
-    - A
-    - B
-    - C
-    - D
-    - I choose A
-    - My answer is B
+##################################
