@@ -1,60 +1,50 @@
 version: "3.1"
 
-stories:
+rules:
 
-# - story: happy path
+# - rule: Say goodbye anytime the user says goodbye
 #   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: mood_great
-#   - action: utter_happy
-
-# - story: sad path 1
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: mood_unhappy
-#   - action: utter_cheer_up
-#   - action: utter_did_that_help
-#   - intent: affirm
-#   - action: utter_happy
-
-# - story: sad path 2
-#   steps:
-#   - intent: greet
-#   - action: utter_greet
-#   - intent: mood_unhappy
-#   - action: utter_cheer_up
-#   - action: utter_did_that_help
-#   - intent: deny
+#   - intent: goodbye
 #   - action: utter_goodbye
 
-- story: explain scale
-  steps:
-  - intent: ask_scale
-  - action: action_scale_answer
+# - rule: Say 'I am a bot' anytime the user challenges
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot
 
-- story: explain interval
-  steps:
-  - intent: ask_interval
-  - action: action_interval_answer
+# - rule: music theory question
+#   steps:
+#   - intent: ask_scale
+#   - intent: ask_chord
+#   - intent: ask_interval
+#   - action: action_music_theory_answer
 
-- story: explain chord
+- rule: Answer scale questions
   steps:
-  - intent: ask_chord
-  - action: action_chord_answer
+    - intent: ask_scale
+    - action: action_scale_answer
 
-- story: explain chord inversions
+- rule: Answer interval questions
   steps:
-  - intent: ask_chord_inversion
-  - action: action_inversion_answer
+    - intent: ask_interval
+    - action: action_interval_answer
 
-- story: start quiz
+- rule: Answer chord questions
+  steps:
+    - intent: ask_chord
+    - action: action_chord_answer
+
+- rule: Answer chord inversion questions
+  steps:
+    - intent: ask_chord_inversion
+    - action: action_inversion_answer
+
+- rule: Start the quiz
   steps:
     - intent: start_quiz
     - action: action_start_quiz
 
-- story: answer question
+- rule: Answer quiz question
   steps:
     - action: action_listen
     - intent: select_answer
