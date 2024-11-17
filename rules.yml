@@ -2,15 +2,15 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+# - rule: Say goodbye anytime the user says goodbye
+#   steps:
+#   - intent: goodbye
+#   - action: utter_goodbye
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+# - rule: Say 'I am a bot' anytime the user challenges
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot
 
 # - rule: music theory question
 #   steps:
@@ -34,12 +34,18 @@ rules:
     - intent: ask_chord
     - action: action_chord_answer
 
-# - rule: Start the quiz
-#   steps:
-#     - intent: start_quiz
-#     - action: action_start_quiz
+- rule: Answer chord inversion questions
+  steps:
+    - intent: ask_chord_inversion
+    - action: action_inversion_answer
 
-# - rule: Answer quiz question
-#   steps:
-#     - intent: select_answer
-#     - action: action_validate_answer
+- rule: Start the quiz
+  steps:
+    - intent: start_quiz
+    - action: action_start_quiz
+
+- rule: Answer quiz question
+  steps:
+    - action: action_listen
+    - intent: select_answer
+    - action: action_validate_answer
