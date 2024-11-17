@@ -2,32 +2,32 @@ version: "3.1"
 
 stories:
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+# - story: happy path
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_great
+#   - action: utter_happy
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+# - story: sad path 1
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: affirm
+#   - action: utter_happy
 
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+# - story: sad path 2
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: deny
+#   - action: utter_goodbye
 
 - story: explain scale
   steps:
@@ -44,12 +44,18 @@ stories:
   - intent: ask_chord
   - action: action_chord_answer
 
-# - story: start quiz
-#   steps:
-#     - intent: start_quiz
-#     - action: action_start_quiz
+- story: explain chord inversions
+  steps:
+  - intent: ask_chord_inversion
+  - action: action_inversion_answer
 
-# - story: answer question
-#   steps:
-#     - intent: select_answer
-#     - action: action_validate_answer
+- story: start quiz
+  steps:
+    - intent: start_quiz
+    - action: action_start_quiz
+
+- story: answer question
+  steps:
+    - action: action_listen
+    - intent: select_answer
+    - action: action_validate_answer
