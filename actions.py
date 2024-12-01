@@ -59,12 +59,15 @@ class ActionScaleAnswer(Action):
                 msg = f"The notes of a {root_note} {scale} are: {', '.join(scale_notes)}."
         elif scale and scale.lower() in scale_info:
             msg = f"{scale.capitalize()}: {scale_info[scale.lower()]}"
+            
         elif not scale:
             msg = "A scale is sequence of notes with a specific pattern of whole (W) and half (H) steps. Different types of scales include major, minor, and pentatonic."
+
         else:
             msg = "I don't recognize that scale as I am still under development. Please provide a simpler scale type."
-        
+            
         dispatcher.utter_message(text=msg)
+        
         return []
 
 
