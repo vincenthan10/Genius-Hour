@@ -13,10 +13,12 @@ intents:
 # - mood_unhappy
 - select_answer
 - start_quiz
+- answer_difficulty
 slots:
   question_number:
     type: rasa.shared.core.slots.FloatSlot
     initial_value: 0
+    influence_conversation: false
     mappings:
     - type: from_intent
       intent: start_quiz
@@ -25,6 +27,13 @@ slots:
     type: rasa.shared.core.slots.TextSlot
     mappings:
     - type: from_text
+  difficulty_level:
+    type: rasa.shared.core.slots.FloatSlot
+    influence_conversation: true
+    mappings:
+    - type: from_intent
+      intent: answer_difficulty
+      value: 0
 entities:
 - scale_type
 - quality
@@ -32,10 +41,12 @@ entities:
 - chord_type
 - root_note
 - inversion_type
+- difficulty
 actions:
 - action_validate_answer
 - action_ask_question
 - action_start_quiz
+- action_ask_difficulty
 - action_scale_answer
 - action_interval_answer
 - action_chord_answer
