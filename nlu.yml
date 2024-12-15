@@ -16,6 +16,11 @@ nlu:
     - Can you quiz me on music theory?
     - Can you test me on music theory?
     - quiz me
+- intent: answer_difficulty
+  examples: |
+    - [1](difficulty)
+    - [2](difficulty)
+    - [3](difficulty)
 - intent: select_answer
   examples: |
     - A
@@ -81,7 +86,16 @@ nlu:
     - What is the [second inversion](inversion_type) of a [G sharp](root_note) [minor chord](chord_type)?
     - Can you tell me the [first inversion](inversion_type) of a [D flat](root_note) [major chord](chord_type)?
     - What is the [second inversion](inversion_type) of a [C](root_note) [minor chord](chord_type)?
-
+    - What is the [second inversion](inversion_type) of a [D](root_note) [major chord](chord_type)?
+    - What is the [first inversion](inversion_type) of an [E flat](root_note) [major chord](chord_type)?
+    - What is the [second inversion](inversion_type) of an [F sharp](root_note) [minor chord](chord_type)?
+    - What is the [first inversion](inversion_type) of a [G](root_note) [major chord](chord_type)?
+    - What is the [first inversion](inversion_type) of a [B](root_note) [minor chord](chord_type)?
+    - What is the [second inversion](inversion_type) of an [A flat](root_note) [major chord](chord_type)?
+    - What is the [first inversion](inversion_type) of a [C sharp](root_note) [minor chord](chord_type)?
+    - What is the [second inversion](inversion_type) of an [E](root_note) [major chord](chord_type)?
+    - What is the [first inversion](inversion_type) of an [A](root_note) [major  chord](chord_type)?
+    - What is the [second inversion](inversion_type) of a [B flat](root_note) [minor chord](chord_type)?
 - synonym: major scale
   examples: |
     - maj scale
@@ -129,4 +143,5 @@ nlu:
     - seventh
     - octave
     - eighth
+
 
