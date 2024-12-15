@@ -52,6 +52,8 @@ stories:
 - story: start quiz
   steps:
     - intent: start_quiz
+    - action: action_ask_difficulty
+    - intent: answer_difficulty
     - action: action_start_quiz
 
 - story: answer question
