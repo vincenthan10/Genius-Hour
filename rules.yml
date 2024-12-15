@@ -42,7 +42,7 @@ rules:
 - rule: Start the quiz
   steps:
     - intent: start_quiz
-    - action: action_start_quiz
+    - action: action_ask_difficulty
 
 - rule: Answer quiz question
   steps:
