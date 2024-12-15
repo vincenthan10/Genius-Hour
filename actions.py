@@ -8,6 +8,7 @@
 # This is a simple example for a custom action which utters "Hello World!"
 version: "3.1"
 from typing import Any, Text, Dict, List
+from venv import logger
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -30,7 +31,8 @@ class ActionScaleAnswer(Action):
             "major scale": "A major scale is a diatonic scale that ascends by whole-steps (W) and half-steps (H) in this specific pattern: W-W-H-W-W-W-H.",
             "minor scale": "A minor scale has three types: natural, harmonic, and melodic. The natural minor scale ascends by whole-steps (W) and half-steps (H) in this specific pattern: W-H-W-W-H-W-W. The harmonic minor scale is the same as the natural minor, but raises the 7th. The melodic minor scale ascends with the 6th and 7th notes both raised, but descends as a natural minor.",
             "chromatic": "A chromatic scale is a twelve-tone scale that includes every pitch in an octave, each a semitone apart.",
-            "pentatonic": "A pentatonic scale is a five-note scale commonly used in blues, rock, and jazz music. There are two types of pentatonic scales: major and minor."
+            "pentatonic": "A pentatonic scale is a five-note scale commonly used in blues, rock, and jazz music. There are two types of pentatonic scales: major and minor.",
+            "scale": "A scale is sequence of notes with a specific pattern of whole (W) and half (H) steps. Different types of scales include major, minor, and pentatonic."
         }
 
         major_scale_notes = {
@@ -41,30 +43,29 @@ class ActionScaleAnswer(Action):
             "E flat" : ["Eb", "F", "G", "Ab", "Bb", "C", "D", "Eb"],
             "E" : ["E", "F#", "G#", "A", "B", "C#", "D#", "E"],
             "F" : ["F", "G", "A", "Bb", "C", "D", "E", "F"],
-            "F#" : ["F#", "G#", "A#", "B", "C#", "D#", "E#", "F#"],
-            "Gb" : ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F", "Gb"],
+            "F sharp" : ["F#", "G#", "A#", "B", "C#", "D#", "E#", "F#"],
+            "G flat" : ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F", "Gb"],
             "G" : ["G", "A", "B", "C", "D", "E", "F#", "G"],
-            "Ab" : ["Ab", "Bb", "C", "Db", "Eb", "F", "G", "Ab"],
+            "A flat" : ["Ab", "Bb", "C", "Db", "Eb", "F", "G", "Ab"],
             "A" : ["A", "B", "C#", "D", "E", "F#", "G#", "A"],
-            "Bb" : ["Bb", "C", "D", "Eb", "F", "G", "A", "Bb"],
+            "B flat" : ["Bb", "C", "D", "Eb", "F", "G", "A", "Bb"],
             "B" : ["B", "C#", "D#", "E", "F#", "G#", "A#", "B"],
-            "Cb" : ["Cb", "Db", "Eb", "Fb", "Gb", "Ab", "Bb", "Cb"],
+            "C flat" : ["Cb", "Db", "Eb", "Fb", "Gb", "Ab", "Bb", "Cb"],
         }
         if root_note and scale:
-            if scale == "major scale" and root_note in major_scale_notes:
+            if scale.lower() == "major scale" and root_note in major_scale_notes:
                 scale_notes = major_scale_notes[root_note]
             else:
                 scale_notes = None
             if scale_notes:
                 msg = f"The notes of a {root_note} {scale} are: {', '.join(scale_notes)}."
+            else:
+                msg = f"I'm sorry, I currently only support major scales for specific notes. Try asking about a 'C major scale'."
         elif scale and scale.lower() in scale_info:
             msg = f"{scale.capitalize()}: {scale_info[scale.lower()]}"
-            
-        elif not scale:
-            msg = "A scale is sequence of notes with a specific pattern of whole (W) and half (H) steps. Different types of scales include major, minor, and pentatonic."
-
         else:
             msg = "I don't recognize that scale as I am still under development. Please provide a simpler scale type."
+            
             
         dispatcher.utter_message(text=msg)
         
@@ -130,7 +131,8 @@ class ActionChordAnswer(Action):
             "minor seventh chord": "A minor seventh chord consists of the root, minor third, perfect fifth, and minor seventh. For example, a C minor seventh chord consists of C, E flat, G, and B flat.",
             "dominant seventh chord": "A dominant seventh chord consists of the root, major third, perfect fifth, and minor seventh. For example, a C dominant seventh chord consists of C, E, G, and B flat.",
             "half-diminished seventh chord": "A half-diminished seventh chord consists of the root, minor third, diminished fifth, and minor seventh. For example, a C half-diminished seventh chord consists of C, E flat, G flat, and B flat.",
-            "diminished seventh chord": "A diminished seventh chord consists of the root, minor third, diminished fifth, and diminished seventh. For example, a C diminished seventh chord consists of C, E flat, G flat, and B double flat."
+            "diminished seventh chord": "A diminished seventh chord consists of the root, minor third, diminished fifth, and diminished seventh. For example, a C diminished seventh chord consists of C, E flat, G flat, and B double flat.",
+            "chord": "A chord is a set of notes that are played simultaneously to create harmony. Some types of chords include triads (stacks of three notes) and seventh chords (stacks of four notes)."
         }
         major_chord_notes = {
             "C" : ["C", "E", "G"],
@@ -243,8 +245,6 @@ class ActionChordAnswer(Action):
                 msg = f"The notes of a {root_note} {chord} are: {', '.join(chord_notes)}."
         elif chord and chord.lower() in chord_info:
             msg = f"{chord.capitalize()}: {chord_info[chord.lower()]}"
-        elif not chord:
-            msg = "A chord is a set of notes that are played simultaneously to create harmony. Some types of chords include triads (stacks of three notes) and seventh chords (stacks of four notes)."
         else:
             msg = "I don't recognize that chord as I am still under development. Please provide a simpler chord type (ie one of the basic triads or seventh chords)."
         
@@ -263,6 +263,13 @@ class ActionInversionAnswer(Action):
         chord = next(tracker.get_latest_entity_values("chord_type"), None)
         root_note = next(tracker.get_latest_entity_values("root_note"), None)
         inversion = next(tracker.get_latest_entity_values("inversion_type"), None)
+
+        logger.info(f"{chord}, {root_note}, {inversion}")
+
+        msg = "I don't recognize that chord as I am still under development. Please provide a simpler chord type (e.g., a basic triad or seventh chord)."
+
+        inversion = inversion.lower()
+        chord = chord.lower()
 
         inversion_info = {
             "root position": "A chord in root position is played where the root note is the lowest note. For example, a C major chord in root position is played C-E-G.",
@@ -412,31 +419,43 @@ class ActionInversionAnswer(Action):
             "C flat": ["Gb", "Cb", "Ebb"]
         }
 
-        if root_note and chord and inversion:
-            if chord == "major chord" and root_note in major_chord_notes and inversion.lower() == "root position":
-                chord_notes = major_chord_notes[root_note]
-            elif chord == "minor chord" and root_note in minor_chord_notes and inversion.lower() == "root position":
-                chord_notes = minor_chord_notes[root_note]
-            elif chord == "major chord" and root_note in major_chord_notes and inversion.lower() == "first inversion":
-                chord_notes = first_inversion_major_notes[root_note]
-            elif chord == "minor chord" and root_note in minor_chord_notes and inversion.lower() == "first inversion":
-                chord_notes = first_inversion_minor_notes[root_note]
-            elif chord == "major chord" and root_note in major_chord_notes and inversion.lower() == "second inversion":
-                chord_notes = second_inversion_major_notes[root_note]
-            elif chord == "minor chord" and root_note in minor_chord_notes and inversion.lower() == "second inversion":
-                chord_notes = second_inversion_minor_notes[root_note]
-            else:
-                chord_notes = None
+        try:
+            # Match chord and inversion
+            chord_notes = None
+            if chord == "major chord":
+                if inversion == "root position":
+                    chord_notes = major_chord_notes.get(root_note)
+                elif inversion == "first inversion":
+                    chord_notes = first_inversion_major_notes.get(root_note)
+                elif inversion == "second inversion":
+                    chord_notes = second_inversion_major_notes.get(root_note)
+            elif chord == "minor chord":
+                if inversion == "root position":
+                    chord_notes = minor_chord_notes.get(root_note)
+                elif inversion == "first inversion":
+                    chord_notes = first_inversion_minor_notes.get(root_note)
+                elif inversion == "second inversion":
+                    chord_notes = second_inversion_minor_notes.get(root_note)
+
             if chord_notes:
                 msg = f"The notes of a {root_note} {chord} in {inversion} are: {', '.join(chord_notes)}."
-        elif inversion and inversion.lower() in inversion_info:
-            msg = f"{inversion.capitalize()}: {inversion_info[inversion.lower()]}"
-        else:
-            msg = "I don't recognize that chord as I am still under development. Please provide a simpler chord type (ie one of the basic triads or seventh chords)."
-        
+            elif inversion in inversion_info:
+                msg = f"{inversion.capitalize()}: {inversion_info[inversion]}"
+        except Exception as e:
+            msg = f"An error occurred while processing your request: {str(e)}"
+
         dispatcher.utter_message(text=str(msg))
         return []
-#train
+
+class ActionAskDifficulty(Action):
+    def name(self) -> Text:
+        return "action_ask_difficulty"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="What difficulty would you like the quiz to be? Type an integer number where 1 = Easy, 2 = Medium, and 3 = Hard.")
+        return []
 
 class ActionStartQuiz(Action):
     def name(self) -> Text:
@@ -445,8 +464,9 @@ class ActionStartQuiz(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        return [SlotSet("question_number", 0), FollowupAction("action_ask_question")]
-    
+        difficulty = next(tracker.get_latest_entity_values("difficulty", None))
+        return [SlotSet("question_number", 0), SlotSet("difficulty_level", difficulty), FollowupAction("action_ask_question")]
+
 class ActionAskQuestion(Action):
     def name(self) -> Text:
         return "action_ask_question"
@@ -455,16 +475,65 @@ class ActionAskQuestion(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         question_number = tracker.get_slot("question_number")
-
-        questions = [
-            {"question": "What notes make up a C major chord?", "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"], "answer": "A"},
-            {"question": "What is the interval between C and G?", "choices": ["A) Major fifth", "B) Perfect fifth", "C) Major sixth", "D) Major fourth"], "answer": "B"},
-            {"question": "What is the pattern of whole and half steps in a major scale?", "choices": ["A) W-W-W-H-H-W-H", "B) W-W-H-W-W-H-W", "C) W-H-W-W-W-H-W", "D) W-W-H-W-W-W-H"], "answer": "D"}
-        ]
-
+        difficulty = tracker.get_slot("difficulty_level")
+        # logger.info(f"Debug: question_number={question_number}")
+        if difficulty == "1":
+                questions = [
+                    {
+                    "question": "What notes make up a C major triad?",
+                    "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the interval between C and E?",
+                    "choices": ["A) Major third", "B) Perfect fourth", "C) Major second", "D) Minor third"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "Which scale has no sharps or flats?",
+                    "choices": ["A) G major", "B) C major", "C) F major", "D) A minor"],
+                    "answer": "B"
+                    }
+                ]
+        elif difficulty == "2":
+                questions = [
+                    {
+                    "question": "How many sharps are in the key of A major?",
+                    "choices": ["A) 2", "B) 3", "C) 4", "D) 5"],
+                    "answer": "B"
+                    },
+                    {
+                    "question": "What is the interval between F and B?",
+                    "choices": ["A) Perfect fourth", "B) Perfect fifth", "C) Tritone", "D) Major third"],
+                    "answer": "C"
+                    },
+                    {
+                    "question": "In the key of G major, what is the seventh scale degree?",
+                    "choices": ["A) E", "B) D", "C) F#", "D) A"],
+                    "answer": "C"
+                    }
+                ]
+        else:
+                questions = [
+                    {
+                    "question": "What is the relative minor of E major?",
+                    "choices": ["A) C# minor", "B) A minor", "C) G# minor", "D) D# minor"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the chord progression for a ii-V-I in C major?",
+                    "choices": ["A) Dm7 - G7 - Cmaj7", "B) Fmaj7 - G7 - Cmaj7", "C) Dm - F - C", "D) Em7 - A7 - Dmaj7"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the inversion of an F major chord with A in the bass?",
+                    "choices": ["A) First inversion", "B) Root position", "C) Second inversion", "D) Third inversion"],
+                 "answer": "A"
+                    }
+                ]
         if question_number >= len(questions):
-            dispatcher.utter_message(text="That's the end of the quiz! Well done!")
-            return [SlotSet("question_number", 0)]
+                dispatcher.utter_message(text="That's the end of the quiz! Well done!")
+                return [SlotSet("question_number", 0)]
         
         current_question = questions[question_number]
         question_text = current_question["question"]
@@ -484,17 +553,72 @@ class ActionValidateAnswer(Action):
         
         user_answer = tracker.get_slot("user_answer")
         question_number = tracker.get_slot("question_number")
+        difficulty = tracker.get_slot("difficulty_level")
 
-        questions = [
-            {"question": "What notes make up a C major chord?", "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"], "answer": "A"},
-            {"question": "What is the interval between C and G?", "choices": ["A) Major fifth", "B) Perfect fifth", "C) Major sixth", "D) Major fourth"], "answer": "B"},
-            {"question": "What is the pattern of whole and half steps in a major scale?", "choices": ["A) W-W-W-H-H-W-H", "B) W-W-H-W-W-H-W", "C) W-H-W-W-W-H-W", "D) W-W-H-W-W-W-H"], "answer": "D"}
-        ]
+        logger.info(f"Debug: question_number={question_number}, user_answer={user_answer}, difficulty={difficulty}")
 
-        if user_answer == questions[question_number]["answer"]:
-            dispatcher.utter_message(text="Correct!")
+
+        if difficulty == "1":
+                questions = [
+                    {
+                    "question": "What notes make up a C major triad?",
+                    "choices": ["A) C, E, G", "B) C, D, G", "C) C, F, A", "D) C, E, A"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the interval between C and E?",
+                    "choices": ["A) Major third", "B) Perfect fourth", "C) Major second", "D) Minor third"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "Which scale has no sharps or flats?",
+                    "choices": ["A) G major", "B) C major", "C) F major", "D) A minor"],
+                    "answer": "B"
+                    }
+                ]
+        elif difficulty == "2":
+                questions = [
+                    {
+                    "question": "How many sharps are in the key of A major?",
+                    "choices": ["A) 2", "B) 3", "C) 4", "D) 5"],
+                    "answer": "B"
+                    },
+                    {
+                    "question": "What is the interval between F and B?",
+                    "choices": ["A) Perfect fourth", "B) Perfect fifth", "C) Tritone", "D) Major third"],
+                    "answer": "C"
+                    },
+                    {
+                    "question": "In the key of G major, what is the seventh scale degree?",
+                    "choices": ["A) E", "B) D", "C) F#", "D) A"],
+                    "answer": "C"
+                    }
+                ]
         else:
-            dispatcher.utter_message(text=f"Incorrect. The correct answer was {questions[question_number]['answer']}.")
+                questions = [
+                    {
+                    "question": "What is the relative minor of E major?",
+                    "choices": ["A) C# minor", "B) A minor", "C) G# minor", "D) D# minor"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the chord progression for a ii-V-I in C major?",
+                    "choices": ["A) Dm7 - G7 - Cmaj7", "B) Fmaj7 - G7 - Cmaj7", "C) Dm - F - C", "D) Em7 - A7 - Dmaj7"],
+                    "answer": "A"
+                    },
+                    {
+                    "question": "What is the inversion of an F major chord with A in the bass?",
+                    "choices": ["A) First inversion", "B) Root position", "C) Second inversion", "D) Third inversion"],
+                 "answer": "A"
+                    }
+                ]
 
-        return [SlotSet("question_number", question_number+1), FollowupAction("action_ask_question")]
-    
+        if user_answer.upper() == questions[question_number]['answer']:
+                dispatcher.utter_message(text="Correct!")
+        else:
+                dispatcher.utter_message(text=f"Incorrect. The correct answer was {questions[question_number]['answer']}.")
+        
+        updated_question_number = question_number + 1
+        logger.info(f"Updating question_number to {updated_question_number}")
+
+        return [SlotSet("question_number", updated_question_number), FollowupAction("action_ask_question")]
